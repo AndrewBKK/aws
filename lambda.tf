@@ -30,7 +30,7 @@ resource "aws_lambda_function" "image_optimization" {
   function_name = var.lambda_image_function_name
   role          = aws_iam_role.lambda_execution_role.arn
   runtime       = "nodejs16.x"
-  handler       = "index.mjs"
+  handler       = "default/index.mjs"
   s3_bucket     = aws_s3_bucket.static_assets.id
   s3_key        = aws_s3_object.image_optimization.key
 
