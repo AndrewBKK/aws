@@ -16,19 +16,23 @@ resource "aws_iam_role" "lambda_execution_role" {
 }
 
 resource "aws_lambda_function" "server_functions" {
-  function_name = "nextjs-server-functions"
+  function_name = local.lambda_server_function_name
   role          = aws_iam_role.lambda_execution_role.arn
   runtime       = "nodejs16.x"
   handler       = "index.handler"
   s3_bucket     = aws_s3_bucket.static_assets.id
-  s3_key        = "server-functions.zip"
+  s3_key        = aws_s3_object.server_functions.key
+
+  depends_on = [aws_s3_object.server_functions]
 }
 
 resource "aws_lambda_function" "image_optimization" {
-  function_name = "nextjs-image-optimization"
+  function_name = local.lambda_image_function_name
   role          = aws_iam_role.lambda_execution_role.arn
   runtime       = "nodejs16.x"
   handler       = "index.handler"
   s3_bucket     = aws_s3_bucket.static_assets.id
-  s3_key        = "image-optimization.zip"
+  s3_key        = aws_s3_object.image_optimization.key
+
+  depends_on = [aws_s3_object.image_optimization]
 }
