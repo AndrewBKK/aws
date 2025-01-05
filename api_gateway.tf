@@ -22,3 +22,8 @@ resource "aws_lambda_permission" "api_gateway_permission" {
   function_name = aws_lambda_function.server_functions.function_name
   principal     = "apigateway.amazonaws.com"
 }
+
+resource "aws_apigatewayv2_stage" "default_stage" {
+  api_id      = aws_apigatewayv2_api.http_api.id
+  name        = "$default" 
+  auto_deploy = true
