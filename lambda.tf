@@ -19,7 +19,7 @@ resource "aws_lambda_function" "server_functions" {
   function_name = var.lambda_server_function_name
   role          = aws_iam_role.lambda_execution_role.arn
   runtime       = "nodejs16.x"
-  handler       = "default/index.mjs"
+  handler       = "/"
   s3_bucket     = aws_s3_bucket.static_assets.id
   s3_key        = aws_s3_object.server_functions.key
 
