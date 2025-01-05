@@ -23,12 +23,6 @@ resource "aws_lambda_permission" "api_gateway_permission" {
   principal     = "apigateway.amazonaws.com"
 }
 
-resource "aws_apigatewayv2_stage" "default_stage" {
-  api_id      = aws_apigatewayv2_api.http_api.id
-  name        = "$default" 
-  auto_deploy = true
-}
-
 resource "aws_cloudwatch_log_group" "api_logs" {
   name              = "/aws/http-api/nextjs-api"
   retention_in_days = 7
