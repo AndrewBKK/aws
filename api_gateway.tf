@@ -28,3 +28,29 @@ resource "aws_apigatewayv2_stage" "default_stage" {
   name        = "$default" 
   auto_deploy = true
 }
+
+resource "aws_cloudwatch_log_group" "api_logs" {
+  name              = "/aws/http-api/nextjs-api"
+  retention_in_days = 7
+}
+
+resource "aws_apigatewayv2_stage" "default_stage" {
+  api_id      = aws_apigatewayv2_api.http_api.id
+  name        = "$default"
+  auto_deploy = true
+
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.api_logs.arn
+    format          = jsonencode({
+      requestId       = "$context.requestId",
+      ip              = "$context.identity.sourceIp",
+      user            = "$context.identity.user",
+      requestTime     = "$context.requestTime",
+      httpMethod      = "$context.httpMethod",
+      resourcePath    = "$context.resourcePath",
+      status          = "$context.status",
+      protocol        = "$context.protocol",
+      responseLength  = "$context.responseLength"
+    })
+  }
+}
