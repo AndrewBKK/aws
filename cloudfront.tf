@@ -7,6 +7,7 @@ resource "aws_cloudfront_distribution" "cdn" {
       http_port              = 80
       https_port             = 443
       origin_protocol_policy = "https-only"
+      origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
 
@@ -17,13 +18,20 @@ resource "aws_cloudfront_distribution" "cdn" {
     cached_methods         = ["GET", "HEAD"]
     forwarded_values {
       query_string = false
+      cookies {
+        forward = "none"
+      }
+    }
+  }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
     }
   }
 
   enabled = true
   default_root_object = "index.html"
-  comment = var.cloudfront_comment
-
   viewer_certificate {
     cloudfront_default_certificate = true
   }
