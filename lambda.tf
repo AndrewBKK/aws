@@ -19,7 +19,7 @@ resource "aws_lambda_function" "server_functions" {
   function_name = var.lambda_server_function_name
   role          = aws_iam_role.lambda_execution_role.arn
   runtime       = "nodejs16.x"
-  handler       = "index.mjs"
+  handler       = "default/index.mjs"
   s3_bucket     = aws_s3_bucket.static_assets.id
   s3_key        = aws_s3_object.server_functions.key
 
@@ -30,7 +30,7 @@ resource "aws_lambda_function" "image_optimization" {
   function_name = var.lambda_image_function_name
   role          = aws_iam_role.lambda_execution_role.arn
   runtime       = "nodejs16.x"
-  handler       = "default/index.mjs"
+  handler       = "index.mjs"
   s3_bucket     = aws_s3_bucket.static_assets.id
   s3_key        = aws_s3_object.image_optimization.key
 
