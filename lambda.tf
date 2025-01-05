@@ -16,7 +16,7 @@ resource "aws_iam_role" "lambda_execution_role" {
 }
 
 resource "aws_lambda_function" "server_functions" {
-  function_name = local.lambda_server_function_name
+  function_name = lambda_server_function_name
   role          = aws_iam_role.lambda_execution_role.arn
   runtime       = "nodejs16.x"
   handler       = "index.handler"
@@ -27,7 +27,7 @@ resource "aws_lambda_function" "server_functions" {
 }
 
 resource "aws_lambda_function" "image_optimization" {
-  function_name = local.lambda_image_function_name
+  function_name = lambda_image_function_name
   role          = aws_iam_role.lambda_execution_role.arn
   runtime       = "nodejs16.x"
   handler       = "index.handler"
